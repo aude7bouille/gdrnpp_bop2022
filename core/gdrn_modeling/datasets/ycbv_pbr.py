@@ -1,3 +1,8 @@
+# Modification: self.scenes = [f"{i:06d}" for i in range(50)]
+# Modification: jpg
+# Modification: True
+# Modification: anno_i),
+
 import hashlib
 import logging
 import os
@@ -55,7 +60,7 @@ class YCBV_PBR_Dataset:
         self.cache_dir = data_cfg.get("cache_dir", osp.join(PROJ_ROOT, ".cache"))  # .cache
         self.use_cache = data_cfg.get("use_cache", True)
         self.num_to_load = data_cfg["num_to_load"]  # -1
-        self.filter_invalid = data_cfg.get("filter_invalid", True)
+        self.filter_invalid = data_cfg.get("filter_invalid", False) # Modification: True
         ##################################################
 
         # NOTE: careful! Only the selected objects
@@ -66,7 +71,8 @@ class YCBV_PBR_Dataset:
         self.obj2label = OrderedDict((obj, obj_id) for obj_id, obj in enumerate(self.objs))
         ##########################################################
 
-        self.scenes = [f"{i:06d}" for i in range(50)]
+        # Modification: self.scenes = [f"{i:06d}" for i in range(50)]
+        self.scenes = [f"{i:06d}" for i in [97]]
 
     def __call__(self):
         """Load light-weight instance annotations of all images into a list of
@@ -114,7 +120,7 @@ class YCBV_PBR_Dataset:
 
             for str_im_id in tqdm(gt_dict, postfix=f"{scene_id}"):
                 int_im_id = int(str_im_id)
-                rgb_path = osp.join(scene_root, "rgb/{:06d}.jpg").format(int_im_id)
+                rgb_path = osp.join(scene_root, "rgb/{:06d}.png").format(int_im_id) # Modification: jpg
                 assert osp.exists(rgb_path), rgb_path
 
                 depth_path = osp.join(scene_root, "depth/{:06d}.png".format(int_im_id))
@@ -140,6 +146,7 @@ class YCBV_PBR_Dataset:
                 for anno_i, anno in enumerate(gt_dict[str_im_id]):
                     obj_id = anno["obj_id"]
                     if obj_id not in self.cat_ids:
+                        print("NOT IN")
                         continue
                     cur_label = self.cat2label[obj_id]  # 0-based label
                     R = np.array(anno["cam_R_m2c"], dtype="float32").reshape(3, 3)
@@ -157,14 +164,14 @@ class YCBV_PBR_Dataset:
                         if h <= 1 or w <= 1:
                             self.num_instances_without_valid_box += 1
                             continue
-
+                    
                     mask_file = osp.join(
                         scene_root,
-                        "mask/{:06d}_{:06d}.png".format(int_im_id, anno_i),
+                        "mask/{:06d}_{:06d}.png".format(int_im_id, obj_id), # Modification: anno_i),
                     )
                     mask_visib_file = osp.join(
                         scene_root,
-                        "mask_visib/{:06d}_{:06d}.png".format(int_im_id, anno_i),
+                        "mask_visib/{:06d}_{:06d}.png".format(int_im_id, obj_id), # Modification: anno_i),
                     )
                     assert osp.exists(mask_file), mask_file
                     assert osp.exists(mask_visib_file), mask_visib_file
@@ -194,7 +201,7 @@ class YCBV_PBR_Dataset:
                         "quat": quat,
                         "trans": t,
                         "centroid_2d": proj,  # absolute (cx, cy)
-                        "segmentation": mask_rle,
+                        "segmentation": mask_single, # Modification: mask_rle,
                         "mask_full": mask_full_rle,  # TODO: load as mask_full, rle
                         "visib_fract": visib_fract,
                         "xyz_path": xyz_path,
@@ -307,8 +314,8 @@ SPLITS_YCBV_PBR = dict(
         models_root=osp.join(DATASETS_ROOT, "BOP_DATASETS/ycbv/models"),
         xyz_root=osp.join(DATASETS_ROOT, "BOP_DATASETS/ycbv/train_pbr/xyz_crop"),
         scale_to_meter=0.001,
-        with_masks=True,  # (load masks but may not use it)
-        with_depth=True,  # (load depth path here, but may not use it)
+        with_masks=False, # Modification: True,  # (load masks but may not use it)
+        with_depth=False, # Modification: True,  # (load depth path here, but may not use it)
         height=480,
         width=640,
         use_cache=True,

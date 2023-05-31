@@ -1,3 +1,5 @@
+# Modification: False,
+
 _base_ = "./common_base.py"
 # -----------------------------------------------------------------------------
 # base model cfg for gdrn
@@ -15,7 +17,7 @@ MODEL = dict(
     EMA=dict(ENABLED=False, INIT_CFG=dict(decay=0.9999, updates=0)),
     POSE_NET=dict(
         NAME="GDRN",  # used module file name
-        XYZ_ONLINE=False,  # rendering xyz online
+        XYZ_=True,  # Modification: False, # rendering xyz online
         XYZ_BP=True,  # calculate xyz from depth by backprojection
         NUM_CLASSES=13,
         USE_MTL=False,  # uncertainty multi-task weighting
@@ -162,7 +164,7 @@ TEST = dict(
     TEST_BBOX_TYPE="est",  # gt | est
     COLOR_AUG=False,  # use random color aug as train
     USE_PNP=False,  # use pnp or direct prediction
-    SAVE_RESULTS_ONLY=False,  # turn this on to only save the predicted results
+    SAVE_RESULTS_ONLY=False, # turn this on to only save the predicted results
     # ransac_pnp | net_iter_pnp (learned pnp init + iter pnp) | net_ransac_pnp (net init + ransac pnp)
     # net_ransac_pnp_rot (net_init + ransanc pnp --> net t + pnp R)
     PNP_TYPE="ransac_pnp",

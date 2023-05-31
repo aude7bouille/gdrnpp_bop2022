@@ -1,3 +1,14 @@
+# Modification: imported datasets
+# Modification
+'''
+dataset = cfg.DATASETS.get(split, [])
+if isinstance(dataset, str):
+    dataset_list = [dataset]
+else:
+    dataset_list = dataset
+for name in dataset_list: # End of modification
+'''
+    
 """Register datasets in this file will be imported in project root to register
 the datasets."""
 import logging
@@ -7,26 +18,26 @@ import mmcv
 import detectron2.utils.comm as comm
 import ref
 from detectron2.data import DatasetCatalog, MetadataCatalog
-from core.gdrn_modeling.datasets import (
-    lm_pbr,
-    lmo_bop_test,
+from core.gdrn_modeling.datasets import ( # Modification
+    # lm_pbr,
+    # lmo_bop_test,
     ycbv_pbr,
     ycbv_d2,
     ycbv_bop_test,
-    hb_pbr,
-    hb_bop_val,
-    hb_bop_test,
-    tudl_pbr,
-    tudl_d2,
-    tudl_bop_test,
-    tless_pbr,
-    tless_d2,
-    tless_bop_test,
-    icbin_pbr,
-    icbin_bop_test,
-    itodd_pbr,
-    itodd_bop_test,
-    itodd_d2,
+    # hb_pbr,
+    # hb_bop_val,
+    # hb_bop_test,
+    # tudl_pbr,
+    # tudl_d2,
+    # tudl_bop_test,
+    # tless_pbr,
+    # tless_d2,
+    # tless_bop_test,
+    # icbin_pbr,
+    # icbin_bop_test,
+    # itodd_pbr,
+    # itodd_bop_test,
+    # itodd_d2,
 )
 
 
@@ -39,25 +50,25 @@ __all__ = [
     "get_available_datasets",
 ]
 _DSET_MOD_NAMES = [
-    "lm_pbr",
-    "lmo_bop_test",
+    # "lm_pbr",
+    # lmo_bop_test",
     "ycbv_pbr",
     "ycbv_d2",
     "ycbv_bop_test",
-    "hb_pbr",
-    "hb_bop_val",
-    "hb_bop_test",
-    "tudl_pbr",
-    "tudl_d2",
-    "tudl_bop_test",
-    "tless_pbr",
-    "tless_d2",
-    "tless_bop_test",
-    "icbin_pbr",
-    "icbin_bop_test",
-    "itodd_pbr",
-    "itodd_bop_test",
-    "itodd_d2",
+    # "hb_pbr",
+    # "hb_bop_val",
+    # "hb_bop_test",
+    # "tudl_pbr",
+    # "tudl_d2",
+    # "tudl_bop_test",
+    # "tless_pbr",
+    # "tless_d2",
+    # "tless_bop_test",
+    # "icbin_pbr",
+    # "icbin_bop_test",
+    # "itodd_pbr",
+    # "itodd_bop_test",
+    # "itodd_d2",
 ]
 
 logger = logging.getLogger(__name__)
@@ -87,7 +98,13 @@ def register_datasets_in_cfg(cfg):
         "TRAIN2",
         "TRAIN_SYN_SUP",
     ]:
-        for name in cfg.DATASETS.get(split, []):
+        # Modification
+        dataset = cfg.DATASETS.get(split, [])
+        if isinstance(dataset, str):
+            dataset_list = [dataset]
+        else:
+            dataset_list = dataset
+        for name in dataset_list: # End of modification
             if name in DatasetCatalog.list():
                 continue
             registered = False

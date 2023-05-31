@@ -265,9 +265,8 @@ def batch_data_inference_roi(cfg, data, device='cuda'):
     batch["roi_zoom_K"] = get_K_crop_resize(batch["roi_cam"], roi_crop_xy_batch, roi_resize_ratio_batch)
     return batch
 
-
 def get_renderer(cfg, data_ref, obj_names, gpu_id=None):
-    """for rendering the targets (xyz) online."""
+    #for rendering the targets (xyz) online.
     model_dir = data_ref.model_dir
 
     obj_ids = [data_ref.obj2id[_obj] for _obj in obj_names]

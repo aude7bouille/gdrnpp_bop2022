@@ -209,6 +209,8 @@ for result_filename in p["result_filenames"]:
 
     # Initialize a renderer.
     ren = None
+    # Modification
+    '''
     if p["error_type"] in ["vsd", "cus"]:
         misc.log("Initializing renderer...")
         width, height = dp_split["im_size"]
@@ -250,6 +252,7 @@ for result_filename in p["result_filenames"]:
                 recalculate_normals=True,
                 use_cache=False,
             )
+    '''
 
     # Load the estimation targets.
     targets = inout.load_json(osp.join(dp_split["base_path"], p["targets_filename"]))

@@ -1,3 +1,5 @@
+# Modification: cfg.DATASETS.TRAIN[0])
+
 import logging
 import os
 import os.path as osp
@@ -92,7 +94,7 @@ class GDRN_Lite(LightningLite):
             return LVISEvaluator(dataset_name, cfg, True, output_folder)
 
         _distributed = self.world_size > 1
-        dataset_meta = MetadataCatalog.get(cfg.DATASETS.TRAIN[0])
+        dataset_meta = MetadataCatalog.get(cfg.DATASETS.TRAIN if isinstance(cfg.DATASETS.TRAIN, str) else cfg.DATASETS.TRAIN[0]) # Modification: cfg.DATASETS.TRAIN[0])
         train_obj_names = dataset_meta.objs
         if evaluator_type == "bop":
             gdrn_eval_cls = GDRN_Evaluator if cfg.VAL.get("USE_BOP", False) else GDRN_EvaluatorCustom
@@ -167,7 +169,7 @@ class GDRN_Lite(LightningLite):
         model.train()
 
         # some basic settings =========================
-        dataset_meta = MetadataCatalog.get(cfg.DATASETS.TRAIN[0])
+        dataset_meta = MetadataCatalog.get(cfg.DATASETS.TRAIN if isinstance(cfg.DATASETS.TRAIN, str) else cfg.DATASETS.TRAIN[0]) # Modification: cfg.DATASETS.TRAIN[0])
         data_ref = ref.__dict__[dataset_meta.ref_key]
         obj_names = dataset_meta.objs
 

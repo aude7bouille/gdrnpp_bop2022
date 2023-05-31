@@ -1,3 +1,8 @@
+# Modification: 48,
+# Modification: TARGETS_FILENAME="test_targets.json",
+# Modification: TRAIN=("ycbv_train_real", "ycbv_train_pbr"),
+# Modification: also vsd
+
 # about 3 days
 _base_ = ["../../_base_/gdrn_base.py"]
 
@@ -32,7 +37,7 @@ INPUT = dict(
 )
 
 SOLVER = dict(
-    IMS_PER_BATCH=48,
+    IMS_PER_BATCH=18, # Modification: 48,
     TOTAL_EPOCHS=40,  # 10
     LR_SCHEDULER_NAME="flat_and_anneal",
     ANNEAL_METHOD="cosine",  # "cosine"
@@ -44,7 +49,8 @@ SOLVER = dict(
 )
 
 DATASETS = dict(
-    TRAIN=("ycbv_train_real", "ycbv_train_pbr"),
+    #TRAIN=("ycbv_train_real", "ycbv_train_pbr"),
+    TRAIN=("ycbv_train_pbr"),
     TEST=("ycbv_test",),
     DET_FILES_TEST=("datasets/BOP_DATASETS/ycbv/test/test_bboxes/yolox_x_640_ycbv_real_pbr_ycbv_bop_test.json",),
     SYM_OBJS=[
@@ -135,8 +141,8 @@ VAL = dict(
     DATASET_NAME="ycbv",
     SPLIT_TYPE="",
     SCRIPT_PATH="lib/pysixd/scripts/eval_pose_results_more.py",
-    TARGETS_FILENAME="test_targets_bop19.json",
-    ERROR_TYPES="vsd,mspd,mssd",
+    TARGETS_FILENAME="test_targets.json", # Modification ; "test_targets_bop19.json"
+    ERROR_TYPES="mspd,mssd", # Modification: also vsd
     USE_BOP=True,  # whether to use bop toolkit
 )
 

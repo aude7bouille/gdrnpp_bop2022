@@ -65,6 +65,7 @@ id2obj = {
 }
 objects = list(id2obj.values())
 
+
 obj_num = len(id2obj)
 obj2id = {_name: _id for _id, _name in id2obj.items()}
 

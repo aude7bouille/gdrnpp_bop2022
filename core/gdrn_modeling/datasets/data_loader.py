@@ -521,7 +521,7 @@ class GDRN_DatasetFromList(Base_DatasetFromList):
             roi_coord_2d_rel = (
                 bbox_center.reshape(2, 1, 1) - roi_coord_2d * np.array([im_W, im_H]).reshape(2, 1, 1)
             ) / scale
-
+        
         ## roi_mask ---------------------------------------
         # (mask_trunc < mask_visib < mask_obj)
         mask_visib = anno["segmentation"].astype("float32") * mask_obj

@@ -1,3 +1,6 @@
+# Modification: list(range(48, 60))
+# Modification: list(range(1, 22)),
+
 # Author: Tomas Hodan (hodantom@cmp.felk.cvut.cz)
 # Center for Machine Perception, Czech Technical University in Prague
 
@@ -88,7 +91,7 @@ def get_model_params(datasets_path, dataset_name, model_type=None):
         # Subset of the HB dataset used in the BOP Challenge 2019/2020:
         "hbs": [1, 3, 4, 8, 9, 10, 12, 15, 17, 18, 19, 22, 23, 29, 32, 33],
         "hb": list(range(1, 34)),  # Full HB dataset.
-        "ycbv": list(range(1, 22)),
+        "ycbv": [11], # Modification: list(range(1, 22)),
         "ycbvposecnn": list(range(1, 22)),
         "hope": list(range(1, 29)),
     }[dataset_name]
@@ -374,7 +377,7 @@ def get_split_params(datasets_path, dataset_name, split, split_type=None):
                 "synt": list(range(80)),
             }[split_type]
         elif split == "test":
-            p["scene_ids"] = list(range(48, 60))
+            p["scene_ids"] = [97] # Modification: list(range(48, 60))
 
         p["im_size"] = (640, 480)
 

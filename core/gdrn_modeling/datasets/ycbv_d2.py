@@ -1,3 +1,8 @@
+# Modification: #"segmentation": mask_rle,
+# Modification: #"mask_full": mask_full_rle,
+# Modification: with_masks=False,
+# Modification: with_depth=False,
+
 import hashlib
 import copy
 import logging
@@ -239,8 +244,8 @@ class YCBV_Dataset:
                     "quat": quat,
                     "trans": trans,
                     "centroid_2d": proj,  # absolute (cx, cy)
-                    "segmentation": mask_rle,
-                    "mask_full": mask_full_rle,
+                    #"segmentation": mask_rle, # Modification
+                    #"mask_full": mask_full_rle, # Modification
                 }
 
                 if self.with_xyz:
@@ -398,8 +403,8 @@ default_cfg = dict(
     # ann_files=[osp.join(DATASETS_ROOT, "BOP_DATASETS/ycbv/image_sets/train.txt")],
     # image_prefixes=[osp.join(DATASETS_ROOT, "BOP_DATASETS/ycbv/train_real")],
     scale_to_meter=0.001,
-    with_masks=True,  # (load masks but may not use it)
-    with_depth=True,  # (load depth path here, but may not use it)
+    with_masks=False, # Modification ; True,  # (load masks but may not use it)
+    with_depth=False, # Modification ; True,  # (load depth path here, but may not use it)
     with_xyz=True,
     height=480,
     width=640,

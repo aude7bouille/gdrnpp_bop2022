@@ -70,7 +70,7 @@ Run on multiple machines:
         help="use adasum algorithm to do reduction",
     )
     # -------------
-    parser.add_argument("--num-gpus", type=int, default=1, help="number of gpus *per machine*")
+    parser.add_argument("--num-gpus", type=int, default=1, help="number of gpus *per machine*") 
     parser.add_argument("--num-machines", type=int, default=1, help="total number of machines")
     parser.add_argument(
         "--machine-rank",
@@ -146,7 +146,7 @@ def my_default_setup(cfg, args):
     assert (
         args.num_gpus <= torch.cuda.device_count() and args.num_gpus >= 1
     ), f"args.num_gpus: {args.num_gpus}, available num gpus: {torch.cuda.device_count()}"
-
+    
     # make sure each worker has a different, yet deterministic seed if specified
     seed_all_rng(None if cfg.SEED < 0 else cfg.SEED + rank)
 

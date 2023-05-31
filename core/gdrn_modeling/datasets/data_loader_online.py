@@ -1,3 +1,5 @@
+# Modification: mask_visib = anno["segmentation"].astype("float32")
+
 # -*- coding: utf-8 -*-
 import copy
 import logging
@@ -67,7 +69,7 @@ def transform_instance_annotations(annotation, transforms, image_size, *, keypoi
     if "segmentation" in annotation:
         # NOTE: here we transform segms to binary masks (interp is nearest by default)
         mask = transforms.apply_segmentation(cocosegm2mask(annotation["segmentation"], h=im_H, w=im_W))
-        annotation["segmentation"] = mask
+        annotation[""] = mask
 
     if "mask_full" in annotation:
         # NOTE: here we transform segms to binary masks (interp is nearest by default)
